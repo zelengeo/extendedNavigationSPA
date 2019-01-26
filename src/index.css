@@ -12,3 +12,61 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.routerBody {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navBar {
+  background-color: lightblue;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.navLink {
+  margin-left: 1em;
+  align-content: center;
+}
+
+.navLink a {
+  color: white;
+}
+
+.navLink a {
+  text-decoration: none;
+}
+
+.navLink a:hover {
+  text-decoration: underline;
+}
+
+.homeContainer {
+  flex: 1 0 auto;
+}
+
+.footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.mainContainer{
+  display: flex;
+  flex-flow: row nowrap;
+  /*justify-content: flex-end;*/
+}
+
+.elements{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.logoElement {
+  height: 200px;
+  margin: 5px;
+}
+
+.selectedElement {
+  flex-basis: 60%;
+}
