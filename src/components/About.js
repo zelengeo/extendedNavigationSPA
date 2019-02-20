@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class About extends Component {
   render() {
-    return 'Only text yet';
+    return <h1>Only text yet</h1>;
   }
 }
 
