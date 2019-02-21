@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import DataModel from '../utils/DataModel';
+import UserEventHandler from '../utils/UserEventHandler';
+
 import logo1 from '../logo1.svg';
 import logo2 from '../logo2.svg';
 import logo3 from '../logo3.svg';
@@ -22,35 +23,36 @@ const MOVE_MAP = {
 class MainContainer extends Component {
   constructor(props) {
     super(props);
-    this._arrowKeyPressEventHandler = this._arrowKeyPressEventHandler.bind(
-      this
-    );
-    // this._setNextPosition = this._setNextPosition.bind(this);
-    this._dataModel = new DataModel('RAW DATAMODEL CONTENT');
+    // Instances
+    this._arrowKeyPressEventHandler = new UserEventHandler('keydown', event => {
+      if (MOVE_MAP.hasOwnProperty(event.code)) {
+        event.preventDefault();
+        this._setNextPosition(MOVE_MAP[event.code]);
+      }
+    });
+    // Functions
+    this._setNextPosition = this._setNextPosition.bind(this);
+    // Initial to-do's
+    // State
     this.state = {
       chosenLogoPos: 0,
       logoList: [logo_, logo1, logo2, logo3, logo4, logo5, logo6]
     };
   }
 
+  // React lifecycle
   componentWillMount() {
-    document.addEventListener(
-      'keydown',
-      this._arrowKeyPressEventHandler,
-      false
-    );
+    this._arrowKeyPressEventHandler.register();
   }
 
   componentWillUnmount() {
-    document.removeEventListener(
-      'keydown',
-      this._arrowKeyPressEventHandler,
-      false
-    );
+    this._arrowKeyPressEventHandler.unregister();
   }
 
+  // Interface
+
+  // Private helpers
   _setNextPosition(move) {
-    console.log('_setNextPosition', this);
     this.setState(prevState => {
       let nextPos = prevState.chosenLogoPos + move;
       if (nextPos >= prevState.logoList.length) {
@@ -60,14 +62,6 @@ class MainContainer extends Component {
       }
       return { ...prevState, chosenLogoPos: nextPos };
     });
-  }
-
-  _arrowKeyPressEventHandler(event) {
-    if (MOVE_MAP.hasOwnProperty(event.code)) {
-      event.preventDefault();
-      console.log(event.code, event);
-      this._setNextPosition(MOVE_MAP[event.code]);
-    }
   }
 
   render() {

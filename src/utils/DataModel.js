@@ -56,6 +56,13 @@ export const DataModel = class DataModel {
     this._root = mapDataToNodes(newData);
     console.log('ROOT', this._root);
   }
+
+  // Interface
+  getRoot() {
+    return this._root;
+  }
+
+  // Private helpers
 };
 
 export default DataModel;
