@@ -8,9 +8,9 @@ class NodeView extends Component {
         <h1>{this.props.node.description}</h1>
         {Array.isArray(this.props.node.getContent()) ? (
           <ul>
-            {this.props.node.getContent().map((item, index) => (
-              <li key={`node_${index}`}>{item.getDescription()}</li>
-            ))}
+            {this.props.node.getContent().map(function(item, index) {
+              return <li key={`node_${index}`}>{item.getDescription()}</li>;
+            })}
           </ul>
         ) : (
           <p>{this.props.node.getContent()}</p>
