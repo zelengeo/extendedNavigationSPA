@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
-import { DataModel } from '../utils/DataModel';
-import UserEventHandler from '../utils/UserEventHandler';
-import { NodeView } from './NodeView';
+import React, { useState } from 'react';
+import DataModel from '../utils/DataModel';
+import useEventHandler from '../utils/useEventListener';
+import NodeView from './NodeView';
+import SideNodeView from './SideNodeView';
 
-import './ReaderView.css';
+import './ReaderView.scss';
+
+const SIDE_NODES = ['left', 'right', 'top', 'bottom'];
 
 const MOVE_MAP = {
   LEFT: -1,
@@ -23,51 +26,83 @@ const KEYBOARD_EVENTS_MOVE_MAP = {
   KeyS: MOVE_MAP.DOWN
 };
 
-class ReaderView extends Component {
-  constructor(props) {
-    super(props);
-    // Instances
-    this._dataModel = new DataModel();
-    this._arrowKeyPressEventHandler = new UserEventHandler('keydown', event => {
-      if (KEYBOARD_EVENTS_MOVE_MAP.hasOwnProperty(event.code)) {
-        event.preventDefault();
-        this._handleNavigation(KEYBOARD_EVENTS_MOVE_MAP[event.code]);
-      }
-    });
-    // Functions
-    this._handleNavigation = this._handleNavigation.bind(this);
-    // Initial to-do's
-    // State
+function ReaderView(props) {
+  const _dataModel = new DataModel();
+  const [focusedNode, setFocusedNode] = useState(_dataModel.getRoot());
 
-    this.state = {
-      focusedNode: this._dataModel.getRoot()
-    };
-  }
+  useEventHandler('keydown', function(event) {
+    if (KEYBOARD_EVENTS_MOVE_MAP.hasOwnProperty(event.code)) {
+      event.preventDefault();
+      _handleNavigation(KEYBOARD_EVENTS_MOVE_MAP[event.code]);
+    }
+  });
 
-  // React lifecycle
-  componentWillMount() {
-    this._arrowKeyPressEventHandler.register();
-  }
+  // private helpers
+  const _handleNavigation = function(direction) {
+    console.log('Navigation event fired', direction, focusedNode, props);
+    switch (direction) {
+      case MOVE_MAP.LEFT:
+        if (focusedNode.getParent()) {
+          setFocusedNode(focusedNode.getParent());
+        }
+        break;
+      case MOVE_MAP.UP:
+        if (focusedNode.getIndex()) {
+          setFocusedNode(
+            focusedNode.getParent().getContent()[focusedNode.getIndex() - 1]
+          );
+        }
+        break;
+      case MOVE_MAP.RIGHT:
+        if (Array.isArray(focusedNode.getContent())) {
+          setFocusedNode(focusedNode.getContent()[0]);
+        }
+        break;
+      case MOVE_MAP.DOWN:
+        if (
+          focusedNode.getParent() &&
+          focusedNode.getParent().getContent().length - 1 >
+            focusedNode.getIndex()
+        ) {
+          setFocusedNode(
+            focusedNode.getParent().getContent()[focusedNode.getIndex() + 1]
+          );
+        }
+        break;
+      default:
+        console.error('Wrong key at navigation handler: ', direction);
+        return null;
+    }
+  };
 
-  componentWillUnmount() {
-    this._arrowKeyPressEventHandler.unregister();
-  }
+  const _getSideNodeChildren = function(side) {
+    switch (side) {
+      case 'left':
+        return _dataModel.getPredecessors(focusedNode);
+      case 'top':
+        return _dataModel.getPreviousSiblings(focusedNode);
+      case 'right':
+        return _dataModel.getAncestors(focusedNode);
+      case 'bottom':
+        return _dataModel.getFollowingSiblings(focusedNode);
+      default:
+        console.error('Wrong key at getting side node data: ', side);
+        return null;
+    }
+  };
 
-  // Interface
-
-  // Private helpers
-  _handleNavigation(direction) {
-    console.log('NAVIGATION SOON', direction);
-  }
-
-  render() {
-    return (
-      <div className={'readerView'}>
-        <h1>Reader</h1>
-        <NodeView node={this.state.focusedNode} />
-      </div>
-    );
-  }
+  return (
+    <div className={'reader-view'}>
+      {SIDE_NODES.map(function(side) {
+        return (
+          <SideNodeView key={'side_node_' + side} className={side}>
+            {_getSideNodeChildren(side)}
+          </SideNodeView>
+        );
+      })}
+      <NodeView node={focusedNode} />
+    </div>
+  );
 }
 
-export { ReaderView };
+export default ReaderView;

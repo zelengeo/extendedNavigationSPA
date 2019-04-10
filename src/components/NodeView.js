@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class NodeView extends Component {
-  render() {
-    console.log('Render', this.props);
-    return (
-      <React.Fragment>
-        <h1>{this.props.node.description}</h1>
-        {Array.isArray(this.props.node.getContent()) ? (
-          <ul>
-            {this.props.node.getContent().map(function(item, index) {
-              return <li key={`node_${index}`}>{item.getDescription()}</li>;
-            })}
-          </ul>
-        ) : (
-          <p>{this.props.node.getContent()}</p>
-        )}
-      </React.Fragment>
-    );
-  }
+import './NodeView.scss';
+
+function NodeView(props) {
+  return (
+    <div className={'node-view'}>
+      <h1>{props.node.description}</h1>
+      {Array.isArray(props.node.getContent()) ? (
+        <ul>
+          {props.node.getContent().map(function(item, index) {
+            return <li key={`node_${index}`}>{item.getDescription()}</li>;
+          })}
+        </ul>
+      ) : (
+        <p>{props.node.getContent()}</p>
+      )}
+    </div>
+  );
 }
 
-export { NodeView };
+export default NodeView;

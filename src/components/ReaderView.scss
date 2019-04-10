@@ -1,0 +1,7 @@
+$min-side-node-cell: 100px;
+
+.reader-view {
+  display: grid;
+  grid-template-columns: $min-side-node-cell auto $min-side-node-cell;
+  grid-template-rows: $min-side-node-cell auto $min-side-node-cell;
+}
