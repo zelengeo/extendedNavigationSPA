@@ -1,13 +1,18 @@
 const ContentNode = class ContentNode {
-  constructor(parent, index, description, content) {
+  constructor(parent, index, title, synopsis, content) {
     this._parent = parent;
     this._index = index;
-    this._description = description;
+    this._title = title;
+    this._synopsis = synopsis;
     this._content = content;
   }
 
-  getDescription() {
-    return this._description;
+  getTitle() {
+    return this._title;
+  }
+
+  getSynopsis() {
+    return this._synopsis;
   }
 
   getContent() {

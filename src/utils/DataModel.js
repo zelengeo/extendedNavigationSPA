@@ -1,18 +1,27 @@
 import ContentNode from './ContentNode';
 
+const SYNOPSIS_DUMMY =
+  'Vamus vitae magna at libero consequat auctor id a tellus. Vivamus suscipit aliquam dapibus. Morbi at tincidunt enim.';
+const CONTENT_DUMMY =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lectus erat, viverra et viverra eget, feugiat id neque. Curabitur a venenatis leo. Sed at augue in augue venenatis elementum. Proin bibendum viverra libero. Morbi dignissim enim sit amet risus vulputate elementum. Pellentesque consequat ex vel nunc bibendum, quis ultricies justo ultrices. Suspendisse a dui dapibus, volutpat lacus sit amet, fermentum justo. Aliquam erat volutpat. Donec vel ornare nibh. Duis at tortor augue. Vivamus accumsan hendrerit magna. Nullam sed laoreet lorem. Morbi convallis fringilla enim vel convallis. Fusce quam lacus, tincidunt non sem sit amet, vestibulum porttitor augue. Praesent quis convallis ante.';
+
 export const DataModel = class DataModel {
   constructor(data) {
     // Should be argument data.
     /* DUMMY DATA TO IMPLEMENT DATAMODEL INTERFACE*/
-    let newData = {};
-    newData.description = 'The Trilogy. Description';
+    const newData = {};
+    newData.title = 'The Trilogy.';
+    newData.synopsis = 'The synopsis of The Trilogy.';
     newData.content = Array.from([1, 2, 3], bookNum => ({
-      description: `The Trilogy. Book ${bookNum}.\nDescription of the book ${bookNum}.`,
+      title: `The Trilogy. Book ${bookNum}.`,
+      synopsis: `Synopsis of the book ${bookNum}.${SYNOPSIS_DUMMY}`,
       content: Array.from([1, 2, 3, 4, 5, 6, 7, 8], chapterNum => ({
-        description: `The Trilogy. Book ${bookNum}. Chapter ${chapterNum}.\nDescription of the Chapter ${chapterNum}.`,
+        title: `The Trilogy. Book ${bookNum}. Chapter ${chapterNum}.`,
+        synopsis: `Synopsis of the Chapter ${chapterNum}.${SYNOPSIS_DUMMY}`,
         content: Array.from([1, 2, 3, 4, 5, 6, 7, 8], paragraphNum => ({
-          description: `Short description of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.`,
-          content: `Content itself of the Paragraph number ${paragraphNum}`
+          title: `Short title of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.`,
+          synopsis: `Synopsis of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.${SYNOPSIS_DUMMY}`,
+          content: `Content itself of the Paragraph number ${paragraphNum}.${CONTENT_DUMMY}`
         }))
       }))
     }));
@@ -21,7 +30,8 @@ export const DataModel = class DataModel {
       const contentNode = new ContentNode(
         null,
         index,
-        data.description,
+        data.title,
+        data.synopsis,
         Array.isArray(data.content)
           ? data.content.map(mapDataToNodes)
           : data.content
