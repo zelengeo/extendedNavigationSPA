@@ -6,7 +6,7 @@ import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
-import ReaderView from './components/ReaderView';
+import ReaderView from './components/reader_route_components/ReaderView';
 
 class App extends Component {
   render() {

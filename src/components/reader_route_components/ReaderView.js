@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DataModel from '../utils/DataModel';
-import useEventHandler from '../utils/useEventListener';
+import DataModel from '../../utils/DataModel';
+import useEventHandler from '../../utils/useEventListener';
 import NodeView from './NodeView';
 import SideNodeView from './SideNodeView';
 
@@ -78,11 +78,11 @@ function ReaderView(props) {
   const _getSideNodeChildren = function(side) {
     switch (side) {
       case 'left':
-        return _dataModel.getPredecessors(focusedNode);
+        return _dataModel.getPredecessors(focusedNode, 1);
       case 'top':
         return _dataModel.getPreviousSiblings(focusedNode);
       case 'right':
-        return _dataModel.getAncestors(focusedNode);
+        return _dataModel.getAncestors(focusedNode, 2);
       case 'bottom':
         return _dataModel.getFollowingSiblings(focusedNode);
       default:
@@ -95,12 +95,16 @@ function ReaderView(props) {
     <div className={'reader-view'}>
       {SIDE_NODES.map(function(side) {
         return (
-          <SideNodeView key={'side_node_' + side} className={side}>
+          <SideNodeView
+            key={'side_node_' + side}
+            className={side}
+            setFocusedNode={setFocusedNode}
+          >
             {_getSideNodeChildren(side)}
           </SideNodeView>
         );
       })}
-      <NodeView node={focusedNode} />
+      <NodeView node={focusedNode} setFocusedNode={setFocusedNode} />
     </div>
   );
 }

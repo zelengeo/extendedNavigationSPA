@@ -10,7 +10,16 @@ function NodeView(props) {
       {Array.isArray(props.node.getContent()) ? (
         <ul>
           {props.node.getContent().map(function(item, index) {
-            return <li key={`node_${index}`}>{item.getTitle()}</li>;
+            return (
+              <li
+                key={`node_${index}`}
+                onClick={function() {
+                  props.setFocusedNode(item);
+                }}
+              >
+                {item.getTitle()}
+              </li>
+            );
           })}
         </ul>
       ) : (

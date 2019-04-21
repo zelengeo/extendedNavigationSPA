@@ -31,6 +31,21 @@ const ContentNode = class ContentNode {
     return this._index;
   }
 
+  /*
+   * Return array with indexes, which describes node address in tree.
+   * //TODO consider better way of indexing. Also unshift has worse performance. Also not needed yet.
+   */
+  getIndexSequence() {
+    const indexSequence = [this._index];
+    let parent = this._parent;
+    while (parent) {
+      indexSequence.unshift(parent.getIndex());
+      parent = parent.getParent();
+    }
+    indexSequence.shift();
+    return indexSequence;
+  }
+
   setIndex(index) {
     this._index = index;
   }

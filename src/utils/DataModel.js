@@ -9,6 +9,7 @@ export const DataModel = class DataModel {
   constructor(data) {
     // Should be argument data.
     /* DUMMY DATA TO IMPLEMENT DATAMODEL INTERFACE*/
+
     const newData = {};
     newData.title = 'The Trilogy.';
     newData.synopsis = 'The synopsis of The Trilogy.';
@@ -99,6 +100,8 @@ export const DataModel = class DataModel {
           .slice(targetNode.getIndex() + 1, targetNode.getIndex() + 1 + count)
       : [];
   }
+
+  getNodeByIndexSequence(indexSequence) {}
 
   // Private helpers
 };
