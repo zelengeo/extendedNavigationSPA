@@ -18,7 +18,7 @@ function useEventHandler(type, handler, target = document, options) {
         target.removeEventListener(type, eventListener, options);
       };
     },
-    [type, target]
+    [type, target, options]
   );
 }
 

@@ -26,7 +26,8 @@ const KEYBOARD_EVENTS_MOVE_MAP = {
   KeyS: MOVE_MAP.DOWN
 };
 
-function ReaderView(props) {
+function ReaderView({ match }) {
+  // match.params.id = id prop
   const _dataModel = new DataModel();
   const [focusedNode, setFocusedNode] = useState(_dataModel.getRoot());
 
@@ -39,7 +40,6 @@ function ReaderView(props) {
 
   // private helpers
   const _handleNavigation = function(direction) {
-    console.log('Navigation event fired', direction, focusedNode, props);
     switch (direction) {
       case MOVE_MAP.LEFT:
         if (focusedNode.getParent()) {

@@ -20,7 +20,7 @@ export const DataModel = class DataModel {
         title: `The Trilogy. Book ${bookNum}. Chapter ${chapterNum}.`,
         synopsis: `Synopsis of the Chapter ${chapterNum}.${SYNOPSIS_DUMMY}`,
         content: Array.from([1, 2, 3, 4, 5, 6, 7, 8], paragraphNum => ({
-          title: `Short title of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.`,
+          title: `Short title of the synopsis of the chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.`,
           synopsis: `Synopsis of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.${SYNOPSIS_DUMMY}`,
           content: `Content itself of the Paragraph number ${paragraphNum}.${CONTENT_DUMMY}`
         }))

@@ -6,7 +6,9 @@ import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
-import ReaderView from './components/reader_route_components/ReaderView';
+import { ROUTE_PATH } from './constants';
+import ReaderView from './components/reader_route/ReaderView';
+import ListingView from './components/listing_route/ListingView';
 
 class App extends Component {
   render() {
@@ -16,15 +18,16 @@ class App extends Component {
           <div className={'routerBody'}>
             <Header
               children={[
-                <Link to="/home">Home</Link>,
-                <Link to="/reader">Reader</Link>,
-                <Link to="/about">About</Link>
+                <Link to={ROUTE_PATH.HOME}>Home</Link>,
+                <Link to={ROUTE_PATH.PUBLICATIONS}>Publications</Link>,
+                <Link to={ROUTE_PATH.ABOUT}>About</Link>
               ]}
             />
-            <Route exact path="/" component={ReaderView} />
-            <Route path="/home" component={Home} />
-            <Route path="/reader" component={ReaderView} />
-            <Route path="/about" component={About} />
+            <Route exact path={ROUTE_PATH.DEFAULT} component={ReaderView} />
+            <Route path={ROUTE_PATH.HOME} component={Home} />
+            <Route path={ROUTE_PATH.PUBLICATIONS} component={ListingView} />
+            <Route path={ROUTE_PATH.READER + '/:id'} component={ReaderView} />
+            <Route path={ROUTE_PATH.ABOUT} component={About} />
             <Footer />
           </div>
         </Router>

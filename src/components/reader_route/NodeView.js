@@ -2,19 +2,19 @@ import React from 'react';
 
 import './NodeView.scss';
 
-function NodeView(props) {
+function NodeView({ node, setFocusedNode }) {
   return (
     <div className={'node-view'}>
-      <h1>{props.node.getTitle()}</h1>
-      <p>{props.node.getSynopsis()}</p>
-      {Array.isArray(props.node.getContent()) ? (
+      <h1>{node.getTitle()}</h1>
+      <p>{node.getSynopsis()}</p>
+      {Array.isArray(node.getContent()) ? (
         <ul>
-          {props.node.getContent().map(function(item, index) {
+          {node.getContent().map(function(item, index) {
             return (
               <li
                 key={`node_${index}`}
                 onClick={function() {
-                  props.setFocusedNode(item);
+                  setFocusedNode(item);
                 }}
               >
                 {item.getTitle()}
@@ -23,7 +23,7 @@ function NodeView(props) {
           })}
         </ul>
       ) : (
-        <p>{props.node.getContent()}</p>
+        <p>{node.getContent()}</p>
       )}
     </div>
   );

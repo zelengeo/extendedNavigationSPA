@@ -2,16 +2,16 @@ import React from 'react';
 
 import './SideNodeView.scss';
 
-function SideNodeView(props) {
+function SideNodeView({ className, children, setFocusedNode }) {
   return (
-    <div className={'side-node-view ' + props.className}>
-      {props.children.map(function(item, index) {
+    <div className={'side-node-view ' + className}>
+      {children.map(function(item, index) {
         return (
           <p
             key={'side_block_' + index}
             className={'side-block-item'}
             onClick={function() {
-              props.setFocusedNode(item);
+              setFocusedNode(item);
             }}
           >
             <span>{item.getTitle()}</span>
