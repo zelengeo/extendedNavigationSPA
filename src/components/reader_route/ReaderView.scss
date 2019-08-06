@@ -1,9 +1,0 @@
-@import '../../utils/variables';
-
-.reader-view {
-  flex-grow: 1;
-  margin: 4px;
-  display: grid;
-  grid-template-columns: $min-side-node-cell auto $min-side-node-cell;
-  grid-template-rows: $min-side-node-cell auto $min-side-node-cell;
-}

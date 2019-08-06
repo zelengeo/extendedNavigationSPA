@@ -1,0 +1,7 @@
+.reader-view {
+  flex-grow: 1;
+  margin: 4px;
+  display: grid;
+  grid-template-columns: 80px auto 80px;
+  grid-template-rows: 80px auto 80px;
+}
