@@ -1,26 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItem from '@material-ui/core/ListItem';
 import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 import Chip from '@material-ui/core/Chip';
+import Typography from '@material-ui/core/Typography';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpandIcon from '@material-ui/icons/ExpandMore';
+import NotesIcon from '@material-ui/icons/Notes';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ListItem from '@material-ui/core/ListItem';
+import Fab from '@material-ui/core/Fab';
 import AdapterLink from '../common';
 
 const useStyles = makeStyles(theme => {
   console.log('Theme', theme);
   return {
-    root: {
-      margin: '2px 0',
-      borderRadius: 8,
-      border: '1px solid rgba(0, 0, 0, 0.23)',
-      '&:hover': {
-        border: '1px solid rgba(0, 0, 0, 0.46)'
-      }
+    root: {},
+    panelSummary: {
+      alignItems: 'center'
+    },
+    panelDetails: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(20),
+      fontWeight: theme.typography.fontWeightMedium,
+      flexGrow: 1
+    },
+    details: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+      flexGrow: 1
     },
     chip: {
-      margin: '0 2px'
+      margin: theme.spacing(0.25)
     }
   };
 });
@@ -33,46 +49,59 @@ function _getClipAction(action, item, index) {
   };
 }
 
-function PublicationListItem({ title, id, tags }) {
+function PublicationListItem({ id, title, synopsis, tags }) {
   const classes = useStyles();
-
-  //TODO:
-  // tag actions
-  // panel grow on item click with item synopsis instead of straight forward to the reader route
-  //  &and reader route by icon
+  const _renderExpansionPanel = React.forwardRef((props, ref) => (
+    <ExpansionPanel innerRef={ref}>
+      <ExpansionPanelSummary
+        expandIcon={<ExpandIcon />}
+        aria-controls={`${id}_panel-content`}
+        id={`${id}_panel-header`}
+        classes={{ content: classes.panelSummary }}
+      >
+        <IconButton
+          edge="start"
+          aria-label="articleLink"
+          component={AdapterLink}
+          to={`/reader/:${id}`}
+        >
+          <NotesIcon />
+        </IconButton>
+        <Typography className={classes.heading}>{title}</Typography>
+        {tags.map((tag, index) => (
+          <Chip
+            key={tag}
+            variant="outlined"
+            size="small"
+            label={tag}
+            className={classes.chip}
+            onDelete={_getClipAction('DELETE', tag, index)}
+            onClick={_getClipAction('CLICK', tag, index)}
+          />
+        ))}
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>
+        <Typography className={classes.details}>{synopsis}</Typography>
+        <Fab aria-label="deletePublication" color="secondary">
+          <DeleteIcon />
+        </Fab>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
+  ));
   return (
-    <ListItem
-      button
-      className={classes.root}
-      component={AdapterLink}
-      to={`/reader/:${id}`}
-    >
-      <ListItemText primary={title} />
-      {tags.map((tag, index) => (
-        <Chip
-          key={tag}
-          variant="outlined"
-          size="small"
-          label={tag}
-          className={classes.chip}
-          onDelete={_getClipAction('DELETE', tag, index)}
-          onClick={_getClipAction('CLICK', tag, index)}
-        />
-      ))}
-      <IconButton edge="end" aria-label="comments">
-        <CommentIcon />
-      </IconButton>
-    </ListItem>
+    <ListItem className={classes.root} component={_renderExpansionPanel} />
   );
 }
 
 PublicationListItem.defaultProps = {
   title: 'UNDEFINED_TITLE',
+  synopsis: 'UNDEFINED_SYNOPSIS',
   id: 'UNDEFINED_ID',
   tags: []
 };
 
 PublicationListItem.propTypes = {
+  synopsis: PropTypes.string,
   title: PropTypes.string,
   id: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string)

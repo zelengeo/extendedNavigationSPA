@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
+    maxWidth: 'unset',
     marginLeft: -drawerWidth,
     marginTop: theme.mixins.toolbar.minHeight,
     '@media (min-width:600px)': {
