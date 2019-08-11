@@ -41,7 +41,8 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-function _getClipAction(action, item, index) {
+// TODO Add switch. Also consider if remover icon is needed here.
+function getClipAction(action, item, index) {
   return function(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -51,7 +52,7 @@ function _getClipAction(action, item, index) {
 
 function PublicationListItem({ id, title, synopsis, tags }) {
   const classes = useStyles();
-  const _renderExpansionPanel = React.forwardRef((props, ref) => (
+  const renderExpansionPanel = React.forwardRef((props, ref) => (
     <ExpansionPanel innerRef={ref}>
       <ExpansionPanelSummary
         expandIcon={<ExpandIcon />}
@@ -75,8 +76,8 @@ function PublicationListItem({ id, title, synopsis, tags }) {
             size="small"
             label={tag}
             className={classes.chip}
-            onDelete={_getClipAction('DELETE', tag, index)}
-            onClick={_getClipAction('CLICK', tag, index)}
+            onDelete={getClipAction('DELETE', tag, index)}
+            onClick={getClipAction('CLICK', tag, index)}
           />
         ))}
       </ExpansionPanelSummary>
@@ -88,9 +89,7 @@ function PublicationListItem({ id, title, synopsis, tags }) {
       </ExpansionPanelDetails>
     </ExpansionPanel>
   ));
-  return (
-    <ListItem className={classes.root} component={_renderExpansionPanel} />
-  );
+  return <ListItem className={classes.root} component={renderExpansionPanel} />;
 }
 
 PublicationListItem.defaultProps = {

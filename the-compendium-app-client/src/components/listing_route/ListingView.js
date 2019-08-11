@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
 import PublicationListItem from './PublicationListItem';
+import AddPublicationButtonDialogue from './AddPublicationButtonDialogue';
 
 const useStyles = makeStyles(theme => ({
   publicationList: {
@@ -11,13 +10,10 @@ const useStyles = makeStyles(theme => ({
   },
   iconLeft: {
     marginRight: theme.spacing(1)
-  },
-  addPublicationButton: {
-    margin: `${theme.spacing(2)}px 0`
   }
 }));
 
-const _getPublicationListItem = function(item) {
+const getPublicationListItem = function(item) {
   return <PublicationListItem key={item.id} {...item} />;
 };
 
@@ -43,22 +39,14 @@ function ListingView() {
 
   return (
     <React.Fragment>
-      <Button
-        variant="contained"
-        className={classes.addPublicationButton}
-        color="primary"
-        onClick={event => console.log('ONCLICK', event.target)}
-      >
-        <SaveIcon className={classes.iconLeft} />
-        Add publication
-      </Button>
+      <AddPublicationButtonDialogue />
       {isError && <p className="listing-view-error-message">ERROR</p>}
 
       {isLoading ? (
         <p className="listing-view-loading-message">LOADING</p>
       ) : (
         <List className={classes.publicationList}>
-          {publicationList.map(_getPublicationListItem)}
+          {publicationList.map(getPublicationListItem)}
         </List>
       )}
     </React.Fragment>
