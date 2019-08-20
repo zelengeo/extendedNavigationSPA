@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { Paper } from '@material-ui/core';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import DataModel from '../../utils/DataModel';
 import useEventHandler from '../../utils/useEventListener';
 import NodeView from './NodeView';
 import SideNodeView from './SideNodeView';
-
-import './ReaderView.scss';
-
-const SIDE_NODES = ['left', 'right', 'top', 'bottom'];
 
 const MOVE_MAP = {
   LEFT: -1,
@@ -26,10 +28,28 @@ const KEYBOARD_EVENTS_MOVE_MAP = {
   KeyS: MOVE_MAP.DOWN
 };
 
+function handleClick(event) {
+  event.preventDefault();
+  alert('You clicked a breadcrumb.');
+}
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  paper: {
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(3)
+  }
+}));
+
 function ReaderView({ match }) {
   // match.params.id = id prop
-  const _dataModel = new DataModel();
-  const [focusedNode, setFocusedNode] = useState(_dataModel.getRoot());
+  const classes = useStyles();
+
+  const dataModel = new DataModel();
+  const [focusedNode, setFocusedNode] = useState(dataModel.getRoot());
 
   useEventHandler('keydown', function(event) {
     if (KEYBOARD_EVENTS_MOVE_MAP.hasOwnProperty(event.code)) {
@@ -75,38 +95,47 @@ function ReaderView({ match }) {
     }
   };
 
-  const _getSideNodeChildren = function(side) {
-    switch (side) {
-      case 'left':
-        return _dataModel.getPredecessors(focusedNode, 1);
-      case 'top':
-        return _dataModel.getPreviousSiblings(focusedNode);
-      case 'right':
-        return _dataModel.getAncestors(focusedNode, 2);
-      case 'bottom':
-        return _dataModel.getFollowingSiblings(focusedNode);
-      default:
-        console.error('Wrong key at getting side node data: ', side);
-        return null;
-    }
-  };
-
   return (
-    <div className={'reader-view'}>
-      {SIDE_NODES.map(function(side) {
-        return (
-          <SideNodeView
-            key={'side_node_' + side}
-            className={side}
-            setFocusedNode={setFocusedNode}
-          >
-            {_getSideNodeChildren(side)}
-          </SideNodeView>
-        );
-      })}
+    <React.Fragment>
+      <Paper elevation={2} className={classes.paper}>
+        <Breadcrumbs aria-label="breadcrumb">
+          {dataModel.getPredecessors(focusedNode, 9).map(node => (
+            <Button
+              key={node.getTitle() + node.getIndex()}
+              variant="text"
+              onClick={() => setFocusedNode(node)}
+            >
+              {node.getTitle()}
+            </Button>
+          ))}
+          <Typography>{focusedNode.getTitle()}</Typography>
+        </Breadcrumbs>
+      </Paper>
+      <SideNodeView
+        orientedTop
+        setFocusedNode={setFocusedNode}
+        sideNodes={dataModel.getPreviousSiblings(focusedNode)}
+      />
       <NodeView node={focusedNode} setFocusedNode={setFocusedNode} />
-    </div>
+      <SideNodeView
+        orientedTop={false}
+        setFocusedNode={setFocusedNode}
+        sideNodes={dataModel.getFollowingSiblings(focusedNode)}
+      />
+    </React.Fragment>
   );
 }
+
+ReaderView.defaultProps = {
+  match: { params: { id: '_id' } }
+};
+
+ReaderView.propTypes = {
+  match: PropTypes.shape({
+    url: PropTypes.string,
+    path: PropTypes.string,
+    params: PropTypes.object
+  })
+};
 
 export default ReaderView;

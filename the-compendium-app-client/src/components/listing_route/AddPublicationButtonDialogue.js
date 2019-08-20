@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    margin: `${theme.spacing(2)}px 0`
+    margin: `${theme.spacing(2)}px 0`,
+    alignSelf: 'flex-start'
   },
   iconLeft: {
     marginRight: theme.spacing(1)

@@ -22,6 +22,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex'
   },
   contentRoot: {
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -29,6 +31,7 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     maxWidth: 'unset',
+    height: `calc(100vh - ${2 * theme.mixins.toolbar.minHeight}px)`,
     marginLeft: -drawerWidth,
     marginTop: theme.mixins.toolbar.minHeight,
     '@media (min-width:600px)': {
@@ -54,7 +57,7 @@ function App() {
 
   return (
     <Router>
-      <div className={classes.root}>
+      <main className={classes.root}>
         <CssBaseline />
         <RootAppBar
           drawerShown={drawerShown}
@@ -83,7 +86,7 @@ function App() {
           <Route path={`${ROUTE_PATH.READER}/:id`} component={ReaderView} />
           <Route path={ROUTE_PATH.ABOUT} component={About} />
         </Container>
-      </div>
+      </main>
     </Router>
   );
 }

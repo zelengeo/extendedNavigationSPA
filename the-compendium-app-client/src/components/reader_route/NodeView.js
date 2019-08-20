@@ -1,32 +1,46 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
-import './NodeView.scss';
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  }
+}));
 
 function NodeView({ node, setFocusedNode }) {
+  const classes = useStyles();
   return (
-    <div className={'node-view'}>
+    <section className={classes.root}>
       <h1>{node.getTitle()}</h1>
       <p>{node.getSynopsis()}</p>
       {Array.isArray(node.getContent()) ? (
         <ul>
-          {node.getContent().map(function(item, index) {
-            return (
-              <li
-                key={`node_${index}`}
-                onClick={function() {
-                  setFocusedNode(item);
-                }}
-              >
-                {item.getTitle()}
-              </li>
-            );
-          })}
+          {node.getContent().map(childNode => (
+            <li
+              key={childNode.getTitle() + childNode.getIndex()}
+              onClick={() => setFocusedNode(childNode)}
+            >
+              {childNode.getTitle()}
+            </li>
+          ))}
         </ul>
       ) : (
         <p>{node.getContent()}</p>
       )}
-    </div>
+    </section>
   );
 }
+
+NodeView.defaultProps = {
+  node: {},
+  setFocusedNode: (...args) =>
+    console.warn('setFocusedNode was not defined', args)
+};
+
+NodeView.propTypes = {
+  node: PropTypes.object,
+  setFocusedNode: PropTypes.func
+};
 
 export default NodeView;
