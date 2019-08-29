@@ -106,6 +106,7 @@ function RootAppBar({ drawerShown, toggleDrawer, drawerItems }) {
                 component={AdapterLink}
                 key={listItem.text}
                 to={listItem.to}
+                disabled={listItem.disabled}
               >
                 <ListItemIcon>{listItem.icon}</ListItemIcon>
                 <ListItemText primary={listItem.text} />

@@ -14,12 +14,14 @@ import ReaderView from './components/reader_route/ReaderView';
 import Home from './components/home_route/Home';
 import ListingView from './components/listing_route/ListingView';
 import About from './components/about_route/About';
+import StatsView from './components/stats_route/StatsView';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    height: '100vh'
   },
   contentRoot: {
     display: 'flex',
@@ -31,7 +33,6 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     maxWidth: 'unset',
-    height: `calc(100vh - ${2 * theme.mixins.toolbar.minHeight}px)`,
     marginLeft: -drawerWidth,
     marginTop: theme.mixins.toolbar.minHeight,
     '@media (min-width:600px)': {
@@ -69,7 +70,12 @@ function App() {
               icon: <BookIcon />,
               to: ROUTE_PATH.PUBLICATIONS
             },
-            { text: 'Stats', icon: <BarChartIcon />, to: ROUTE_PATH.HOME },
+            {
+              text: 'Stats',
+              icon: <BarChartIcon />,
+              to: ROUTE_PATH.STATS,
+              disabled: true
+            },
             'DIVIDER',
             { text: 'About', icon: <QuestionIcon />, to: ROUTE_PATH.ABOUT }
           ]}
@@ -82,6 +88,7 @@ function App() {
         >
           <Route exact path={ROUTE_PATH.DEFAULT} component={About} />
           <Route path={ROUTE_PATH.HOME} component={Home} />
+          <Route path={ROUTE_PATH.STATS} component={StatsView} />
           <Route path={ROUTE_PATH.PUBLICATIONS} component={ListingView} />
           <Route path={`${ROUTE_PATH.READER}/:id`} component={ReaderView} />
           <Route path={ROUTE_PATH.ABOUT} component={About} />

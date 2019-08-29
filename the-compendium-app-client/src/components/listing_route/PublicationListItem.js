@@ -83,7 +83,7 @@ function PublicationListItem({ id, title, synopsis, tags }) {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <Typography className={classes.details}>{synopsis}</Typography>
-        <Fab aria-label="deletePublication" color="secondary">
+        <Fab aria-label="deletePublication" color="secondary" size="medium">
           <DeleteIcon />
         </Fab>
       </ExpansionPanelDetails>
