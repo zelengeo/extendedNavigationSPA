@@ -85,9 +85,8 @@ function SideNodeView({ orientedTop, sideNodes, setFocusedNode }) {
       {sideNodes.length < 2 ? null : (
         <Popper
           open={openDropdown}
-          placement="top-start"
+          placement={orientedTop ? 'bottom-start' : 'top-start'}
           anchorEl={buttonGroupRef.current}
-          disablePortal
           transition
           style={{
             width:
