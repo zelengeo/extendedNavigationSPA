@@ -7,8 +7,9 @@ const CONTENT_DUMMY =
 
 export const DataModel = class DataModel {
   constructor(data) {
+    console.log('DM constructor', data);
     // Should be argument data.
-    /* DUMMY DATA TO IMPLEMENT DATAMODEL INTERFACE*/
+    /* DUMMY DATA TO IMPLEMENT DATAMODEL INTERFACE */
 
     const newData = {};
     newData.title = 'The Trilogy.';
@@ -16,10 +17,10 @@ export const DataModel = class DataModel {
     newData.content = Array.from([1, 2, 3], bookNum => ({
       title: `The Trilogy. Book ${bookNum}.`,
       synopsis: `Synopsis of the book ${bookNum}.${SYNOPSIS_DUMMY}`,
-      content: Array.from([1, 2, 3, 4, 5, 6, 7, 8], chapterNum => ({
+      children: Array.from([1, 2, 3, 4, 5, 6, 7, 8], chapterNum => ({
         title: `The Trilogy. Book ${bookNum}. Chapter ${chapterNum}.`,
         synopsis: `Synopsis of the Chapter ${chapterNum}.${SYNOPSIS_DUMMY}`,
-        content: Array.from([1, 2, 3, 4, 5, 6, 7, 8], paragraphNum => ({
+        children: Array.from([1, 2, 3, 4, 5, 6, 7, 8], paragraphNum => ({
           title: `Short title of the paragraph ${paragraphNum} synopsis of the chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.`,
           synopsis: `Synopsis of the Chapter ${chapterNum}, of the book ${bookNum}, of The Trilogy.${SYNOPSIS_DUMMY}`,
           content: `Content itself of the Paragraph number ${paragraphNum}.${CONTENT_DUMMY}`
@@ -27,15 +28,13 @@ export const DataModel = class DataModel {
       }))
     }));
 
-    let mapDataToNodes = function(data, index = 0) {
+    const mapDataToNodes = function(data, index = 0) {
       const contentNode = new ContentNode(
         null,
         index,
         data.title,
         data.synopsis,
-        Array.isArray(data.content)
-          ? data.content.map(mapDataToNodes)
-          : data.content
+        Array.isArray(data.content) ? data.content.map(mapDataToNodes) : data.content
       );
 
       Array.isArray(contentNode.getContent()) &&
@@ -54,7 +53,7 @@ export const DataModel = class DataModel {
     return this._root;
   }
 
-  //TODO Unshift is not effecient
+  // TODO Unshift is not effecient
   getPredecessors(targetNode = this._root, count = 3) {
     const predecessorArray = [];
     let parent = targetNode.getParent();
@@ -68,7 +67,7 @@ export const DataModel = class DataModel {
   }
 
   getAncestors(targetNode = this._root, count = 3) {
-    let ancestorArray = [];
+    const ancestorArray = [];
     let content = targetNode.getContent();
     let i = count;
     while (i && Array.isArray(content) && content.length) {

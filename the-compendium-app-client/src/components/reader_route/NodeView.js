@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     flexShrink: 1,
     overflow: 'auto',
-    margin: `${theme.spacing(1)}px 0`,
+    margin: `${theme.spacing(1)}px 5px`,
     padding: `${theme.spacing(1)}px ${theme.spacing(4)}px`
   },
   customScrollbar: {
@@ -63,10 +63,7 @@ function NodeView({ node, setFocusedNode }) {
               key={childNode.getTitle() + childNode.getIndex()}
               onClick={() => setFocusedNode(childNode)}
             >
-              <ListItemText
-                primary={childNode.getTitle()}
-                secondary={childNode.getSynopsis()}
-              />
+              <ListItemText primary={childNode.getTitle()} secondary={childNode.getSynopsis()} />
             </ListItem>
           ))}
         </List>
@@ -79,8 +76,7 @@ function NodeView({ node, setFocusedNode }) {
 
 NodeView.defaultProps = {
   node: {},
-  setFocusedNode: (...args) =>
-    console.warn('setFocusedNode was not defined', args)
+  setFocusedNode: (...args) => console.warn('setFocusedNode was not defined', args)
 };
 
 NodeView.propTypes = {

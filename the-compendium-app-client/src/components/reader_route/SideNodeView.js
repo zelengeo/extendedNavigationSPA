@@ -43,26 +43,16 @@ function SideNodeView({ orientedTop, sideNodes, setFocusedNode }) {
   }
 
   function handleClose(event) {
-    if (buttonGroupRef.current && buttonGroupRef.current.contains(event.target))
-      return;
+    if (buttonGroupRef.current && buttonGroupRef.current.contains(event.target)) return;
 
     setOpenDropdown(false);
   }
 
-  const icon = orientedTop ? (
-    <KeyboardArrowUpIcon />
-  ) : (
-    <KeyboardArrowDownIcon />
-  );
+  const icon = orientedTop ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />;
 
   return sideNodes.length ? (
     <React.Fragment>
-      <ButtonGroup
-        variant="contained"
-        color="primary"
-        ref={buttonGroupRef}
-        aria-label="sibling node navigation button"
-      >
+      <ButtonGroup variant="contained" color="primary" ref={buttonGroupRef} aria-label="sibling node navigation button">
         <Button
           key={sideNodes[0].getTitle() + sideNodes[0].getIndex()}
           className={classes.navButton}
@@ -89,18 +79,14 @@ function SideNodeView({ orientedTop, sideNodes, setFocusedNode }) {
           anchorEl={buttonGroupRef.current}
           transition
           style={{
-            width:
-              buttonGroupRef && buttonGroupRef.current
-                ? buttonGroupRef.current.clientWidth
-                : 'auto'
+            width: buttonGroupRef && buttonGroupRef.current ? buttonGroupRef.current.clientWidth : 'auto'
           }}
         >
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin:
-                  placement === 'bottom' ? 'center top' : 'center bottom'
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
               }}
             >
               <Paper id="menu-list-grow">
@@ -132,8 +118,7 @@ function SideNodeView({ orientedTop, sideNodes, setFocusedNode }) {
 
 SideNodeView.defaultProps = {
   sideNodes: [],
-  setFocusedNode: (...args) =>
-    console.warn('setFocusedNode was not defined', args),
+  setFocusedNode: (...args) => console.warn('setFocusedNode was not defined', args),
   orientedTop: true
 };
 

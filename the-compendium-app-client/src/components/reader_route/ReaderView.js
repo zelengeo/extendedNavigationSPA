@@ -44,11 +44,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function ReaderView({ match }) {
-  // match.params.id = id prop
+function ReaderView({ dataModel }) {
   const classes = useStyles();
 
-  const dataModel = new DataModel();
   const [focusedNode, setFocusedNode] = useState(dataModel.getRoot());
 
   useEventHandler('keydown', function(event) {
@@ -68,9 +66,7 @@ function ReaderView({ match }) {
         break;
       case MOVE_MAP.UP:
         if (focusedNode.getIndex()) {
-          setFocusedNode(
-            focusedNode.getParent().getContent()[focusedNode.getIndex() - 1]
-          );
+          setFocusedNode(focusedNode.getParent().getContent()[focusedNode.getIndex() - 1]);
         }
         break;
       case MOVE_MAP.RIGHT:
@@ -79,14 +75,8 @@ function ReaderView({ match }) {
         }
         break;
       case MOVE_MAP.DOWN:
-        if (
-          focusedNode.getParent() &&
-          focusedNode.getParent().getContent().length - 1 >
-            focusedNode.getIndex()
-        ) {
-          setFocusedNode(
-            focusedNode.getParent().getContent()[focusedNode.getIndex() + 1]
-          );
+        if (focusedNode.getParent() && focusedNode.getParent().getContent().length - 1 > focusedNode.getIndex()) {
+          setFocusedNode(focusedNode.getParent().getContent()[focusedNode.getIndex() + 1]);
         }
         break;
       default:
@@ -100,11 +90,7 @@ function ReaderView({ match }) {
       <Paper elevation={2} className={classes.paper}>
         <Breadcrumbs aria-label="breadcrumb">
           {dataModel.getPredecessors(focusedNode, 9).map(node => (
-            <Button
-              key={node.getTitle() + node.getIndex()}
-              variant="text"
-              onClick={() => setFocusedNode(node)}
-            >
+            <Button key={node.getTitle() + node.getIndex()} variant="text" onClick={() => setFocusedNode(node)}>
               {node.getTitle()}
             </Button>
           ))}
@@ -127,15 +113,11 @@ function ReaderView({ match }) {
 }
 
 ReaderView.defaultProps = {
-  match: { params: { id: '_id' } }
+  dataModel: new DataModel()
 };
 
 ReaderView.propTypes = {
-  match: PropTypes.shape({
-    url: PropTypes.string,
-    path: PropTypes.string,
-    params: PropTypes.object
-  })
+  dataModel: PropTypes.object
 };
 
 export default ReaderView;

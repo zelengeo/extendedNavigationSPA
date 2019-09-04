@@ -8,7 +8,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpandIcon from '@material-ui/icons/ExpandMore';
-import NotesIcon from '@material-ui/icons/Notes';
+import LaunchIcon from '@material-ui/icons/Launch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ListItem from '@material-ui/core/ListItem';
 import Fab from '@material-ui/core/Fab';
@@ -62,11 +62,12 @@ function PublicationListItem({ id, title, synopsis, tags }) {
       >
         <IconButton
           edge="start"
+          color={'primary'}
           aria-label="articleLink"
           component={AdapterLink}
-          to={`/reader/:${id}`}
+          to={`/reader/${id}`}
         >
-          <NotesIcon />
+          <LaunchIcon />
         </IconButton>
         <Typography className={classes.heading}>{title}</Typography>
         {tags.map((tag, index) => (

@@ -10,9 +10,9 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import QuestionIcon from '@material-ui/icons/QuestionAnswer';
 import { ROUTE_PATH } from './constants';
 import RootAppBar from './components/root/RootAppBar';
-import ReaderView from './components/reader_route/ReaderView';
+import ReaderRouteView from './components/reader_route/ReaderRouteView';
 import Home from './components/home_route/Home';
-import ListingView from './components/listing_route/ListingView';
+import ListingRouteView from './components/listing_route/ListingRouteView';
 import About from './components/about_route/About';
 import StatsView from './components/stats_route/StatsView';
 
@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
-  const [drawerShown, setDrawerShown] = React.useState(false);
+  const [drawerShown, setDrawerShown] = React.useState(true);
 
   function toggleDrawer() {
     setDrawerShown(!drawerShown);
@@ -80,17 +80,12 @@ function App() {
             { text: 'About', icon: <QuestionIcon />, to: ROUTE_PATH.ABOUT }
           ]}
         />
-        <Container
-          className={clsx(
-            classes.contentRoot,
-            drawerShown && classes.contentShift
-          )}
-        >
+        <Container className={clsx(classes.contentRoot, drawerShown && classes.contentShift)}>
           <Route exact path={ROUTE_PATH.DEFAULT} component={About} />
           <Route path={ROUTE_PATH.HOME} component={Home} />
           <Route path={ROUTE_PATH.STATS} component={StatsView} />
-          <Route path={ROUTE_PATH.PUBLICATIONS} component={ListingView} />
-          <Route path={`${ROUTE_PATH.READER}/:id`} component={ReaderView} />
+          <Route path={ROUTE_PATH.PUBLICATIONS} component={ListingRouteView} />
+          <Route path={`${ROUTE_PATH.READER}/:id`} component={ReaderRouteView} />
           <Route path={ROUTE_PATH.ABOUT} component={About} />
         </Container>
       </main>

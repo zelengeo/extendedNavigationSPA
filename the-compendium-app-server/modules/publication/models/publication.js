@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-
 const publicationSchema = new Schema({
   tags: [String],
   date: { type: Date, default: Date.now },

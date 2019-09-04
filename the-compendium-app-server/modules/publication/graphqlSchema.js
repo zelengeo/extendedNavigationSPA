@@ -1,13 +1,13 @@
 const { gql } = require("apollo-server-express");
 
-const typeDefs = gql`   
+const typeDefs = gql`
   type Publication {
     _id: ID!
     tags: [String]
     date: String!
     root: Node
   }
-  
+
   type Node {
     _id: ID!
     title: String!
@@ -17,57 +17,53 @@ const typeDefs = gql`
   }
 
   input CreatePublicationInput {
-    tags: [String], 
-    date: String!, 
-    root: CreateNodeInput
-  }
-  
-  input UpdatePublicationInput {
-    _id:ID!,
-    tags: [String], 
-    date: String!, 
+    tags: [String]
+    date: String!
     root: CreateNodeInput
   }
 
-  
+  input UpdatePublicationInput {
+    _id: ID!
+    tags: [String]
+    date: String!
+    root: CreateNodeInput
+  }
+
   input CreateNodeInput {
     title: String!
     synopsis: String
     content: String
     children: [CreateNodeInput!]
-    }
-    
-    
+  }
+
   input UpdateNodeInput {
-    _id:ID!
+    _id: ID!
     title: String
     synopsis: String
     content: String
     children: [ID!]
   }
-  
-  
-  
+
   type Query {
     publications: [Publication!]!
-    publication(_id:ID!): Publication
-    
+    publication(_id: ID!): Publication
+
     nodes: [Node!]!
-    node(_id:ID!): Node
+    node(_id: ID!): Node
   }
-  
+
   type Mutation {
-    addPublication(params: CreatePublicationInput!):Publication!
-    updatePublication(params: UpdateNodeInput!):Publication!
-    removePublication(_id:ID!):Publication!
-    
-    addNode(params: CreateNodeInput!):Node!
-    updateNode(params: UpdateNodeInput!):Node!
-    removeNode(_id:ID!):Node!
-  }`;
+    addPublication(params: CreatePublicationInput!): Publication!
+    updatePublication(params: UpdateNodeInput!): Publication!
+    removePublication(_id: ID!): Publication!
+
+    addNode(params: CreateNodeInput!): Node!
+    updateNode(params: UpdateNodeInput!): Node!
+    removeNode(_id: ID!): Node!
+  }
+`;
 
 module.exports = typeDefs;
-
 
 // First try with unions
 // `

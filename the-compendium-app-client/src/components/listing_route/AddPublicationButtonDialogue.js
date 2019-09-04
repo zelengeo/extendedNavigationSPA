@@ -43,12 +43,7 @@ function AddPublicationButtonDialogue({ saveData }) {
 
   return (
     <React.Fragment>
-      <Button
-        variant="contained"
-        className={classes.button}
-        color="primary"
-        onClick={openDialogue}
-      >
+      <Button variant="contained" className={classes.button} color="primary" onClick={openDialogue}>
         <AddIcon className={classes.iconLeft} />
         <Typography align="center" variant="button">
           Add publication
@@ -61,13 +56,9 @@ function AddPublicationButtonDialogue({ saveData }) {
         onClose={closeDialogue}
         aria-labelledby="add-publication-dialog-title"
       >
-        <DialogTitle id="add-publication-dialog-title">
-          Add Publication
-        </DialogTitle>
+        <DialogTitle id="add-publication-dialog-title">Add Publication</DialogTitle>
         <DialogContent>
-          <DialogContentText color="primary">
-            Write your content here:
-          </DialogContentText>
+          <DialogContentText color="primary">Write your content here:</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -87,11 +78,7 @@ function AddPublicationButtonDialogue({ saveData }) {
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            onClick={saveDialogueData}
-            color="primary"
-            variant="contained"
-          >
+          <Button onClick={saveDialogueData} color="primary" variant="contained">
             Save
           </Button>
           <Button onClick={closeDialogue} color="default">

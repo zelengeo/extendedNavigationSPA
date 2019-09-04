@@ -62,10 +62,7 @@ function RootAppBar({ drawerShown, toggleDrawer, drawerItems }) {
 
   return (
     <React.Fragment>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, drawerShown && classes.appBarShift)}
-      >
+      <AppBar position="fixed" className={clsx(classes.appBar, drawerShown && classes.appBarShift)}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -128,9 +125,7 @@ RootAppBar.defaultProps = {
 RootAppBar.propTypes = {
   drawerShown: PropTypes.bool,
   toggleDrawer: PropTypes.func,
-  drawerItems: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-  )
+  drawerItems: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object]))
 };
 
 export default RootAppBar;
